@@ -9,6 +9,10 @@ import java.util.Optional;
 
 public class MemberService {
 
+    /*
+    * ctrl + shift + T : 클래스 단위로 테스트 생성
+    * */
+
     private final MemberRepository memberRepository = new MemoryMemberRepository();
 
     /*
