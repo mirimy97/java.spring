@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
 public class MemberService {
 
     /*
@@ -18,7 +17,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     // constructor 사용 : memberRepository를 new로 직접 생성하는 게 아니라 외부에서 주입하도록 변경
-    @Autowired
+
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
