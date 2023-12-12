@@ -4,6 +4,7 @@ import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -22,8 +23,17 @@ class MemberServiceTest {
      * 테스트 생성 Tip : Service Class에서 ctrl + shift + T -> 클래스 단위로 테스트 자동 생성
      * */
 
-    MemberService memberService = new MemberService();
-    MemoryMemberRepository repository = new MemoryMemberRepository();
+    MemberService memberService;
+    MemoryMemberRepository repository;
+
+    @BeforeEach // test가 동작하기 전 수행
+    public void beforeEach() {
+        // 1. MemoryMemberRepository 인스턴스 생성
+        repository = new MemoryMemberRepository();
+        // 2. 생성한 repository 인스턴스를 MemberService에 주입
+        memberService = new MemberService(repository);
+        // 3. 그러면, MemberService와 MemberServiceTest에서 같은 repository를 상용한다.
+    }
 
     //    각 테스트 메서드는 순서가 보장되지 않기 때문에, 각각의 로직 이후에 데이터를 초기화해주는 과정이 필요하다.
     @AfterEach    // 각 메서드가 끝날 때마다 수행

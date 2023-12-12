@@ -12,12 +12,17 @@ public class MemberService {
     /*
     * ctrl + shift + T : 클래스 단위로 테스트 생성
     * */
-
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+//    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
+    // constructor 사용 : memberRepository를 new로 직접 생성하는 게 아니라 외부에서 주입하도록 변경
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     /*
      * 회원 가입
      * */
+
     public Long join(Member member) {
         // 같은 이름이 있는 중복 회원 x
         validateDuplicateMember(member);
