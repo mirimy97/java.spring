@@ -15,23 +15,24 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringConfig {
 
-    private EntityManager em;
+    private final MemberRepository memberRepository;
 
-    @Autowired
-    public SpringConfig(EntityManager em) {
-        this.em = em;
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
     @Bean
     public MemberService memberService() {
-        // MemberService 생성할 때, MemberRepository 필요함
-        // 따라서 아래 메서드를 호출해서 MemberService 생성자에 주입
-        return new MemberService(memberRepository());
+
+        return new MemberService(memberRepository);
     }
 
-    @Bean
-    public MemberRepository memberRepository() {
+    // Spring data jpa는 JpaRepository를 상속한 인터페이스를 만들면 repository 구현체를 자동으로 bean에 등록해주기때문에, 아래 코드는 필요없다.
+//    @Bean
+//    public MemberRepository memberRepository() {
+//        1. 메모리 데이터
 //        return new MemoryMemberRepository();
-        return new JpaMemberRepository(em);
-    }
+//        2. H2, Jpa 사용
+//        return new JpaMemberRepository(em);
+//    }
 }
