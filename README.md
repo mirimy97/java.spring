@@ -64,8 +64,12 @@
 
 7. [오버라이딩(overriding)](#7-오버라이딩overriding)
    - [오버라이딩](#-오버라이딩)
-   - [super](#-super---조상-클래스의-멤버)
-   - [super()](#-super---조상-클래스의-생성자)
+   - [super - 조상 클래스의 멤버](#-super---조상-클래스의-멤버)
+   - [super() - 조상 클래스의 생성자](#-super---조상-클래스의-생성자)
+8. [package와 import](#8-package와-import)
+   - [패키지(pakage)](#-패키지package)
+   - [import문](#-import문)
+   - [static import문](#-static-import문)
 
 # 1. 클래스와 인스턴스
 
@@ -762,7 +766,7 @@ class Chile extends Parent {
 - **차이점**
   | super | 조상의 멤버(super)와 자신의 멤버를 구별 |
   | ----- | --------------------------------------- |
-  | this  | 매개 변수와 인스턴스 변수(this)를 구별  |
+  | this | 매개 변수와 인스턴스 변수(this)를 구별 |
 
 ### 활용
 
@@ -798,3 +802,55 @@ class Child extends Parent {
 ### 상속 관계에서 super()의 사용과 생성자 호출 과정 실습 → [🔗링크](https://github.com/mirimy97/java.spring/blob/master/javajungsuk/ch07/PointTest.java)
 
 어떤 클래스의 인스턴스를 생성하면 **자손(자신) ~ 조상 ~ … ~ Object 클래스**까지의 생성자가 순차적으로 호출된다.
+
+# 8. package와 import
+
+## 💡 패키지(package)
+
+### 패키지란?
+
+- 서로 관련된 클래스들끼리의 묶음
+- 클래스 또는 인터페이스를 포함시킬 수 있음
+- 패키지끼리도 포함될 수 있다.
+- 서로 다른 패키지에 존재한다면 클래스는 같은 이름을 가질 수 있다.
+
+### 패키지의 선언
+
+```java
+// 위치 : 클래스나 인터페이스 소스파일(.java)의 맨 위
+package 패키지명;
+```
+
+## 💡 import문
+
+- 소스파일에 사용된 클래스의 패키지 정보를 컴파일러에게 제공한다.
+- 소스코드에서 클래스의 패키지명을 생략할 수 있다.
+  - `java.util.Date` → `Date`
+
+### import문 선언
+
+```java
+// package문
+
+// import문 선언 위치
+import 패키지명.클래스명;   // 특정 클래스만
+import 패키지명.*;          // 전체
+
+// 클래스 선언
+```
+
+- `.*` 는 패키지 내의 모든 클래스를 포함할 수 있으나, **패키지를 포함할 수 는 없다.**
+- 매우 빈번히 사용되는 `java.lang.*` 패키지는 모든 소스파일에 묵시적으로 선언되어 있다.
+
+## 💡 static import문
+
+- 특정 **클래스의 static 멤버를 사용할 때,** 클래스 정보를 컴파일러에게 제공한다.
+- static 멤버의 클래스명을 생략할 수 있다.
+  ```java
+  import static java.lang.Integer.*;    // Integer클래스의 모든 static 멤버
+  import static java.lang.Math.random;  // Math 클래스의 random() 메서드만
+  import static java.lang.System.out;   // System 클래스의 클래스 변수 out
+
+  // System.out.println(Math.random());
+  out.println(random());   // System과 Math 클래스이름을 생략했다.
+  ```
