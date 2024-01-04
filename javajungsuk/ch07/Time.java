@@ -19,6 +19,11 @@ public class Time {
         return hour;
     }
 
+    /**
+     * 멤버 변수를 다루기 위한 setter는 접근 제어자로 public을 사용했다.
+     * -> t.hour = 13; 과 같은 직접 접근은 허용되지 않고,
+     * t.setHour(13); 과 같이 메서드를 통한 접근만 허용된다.
+     */
     public void setHour(int hour) {
         /**
          * 조건이 있다면, 검사 후 지정
