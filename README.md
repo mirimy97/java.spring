@@ -63,13 +63,30 @@
    - [Object클래스](#-object클래스)
 
 7. [오버라이딩(overriding)](#7-오버라이딩overriding)
+
    - [오버라이딩](#-오버라이딩)
+
    - [super - 조상 클래스의 멤버](#-super---조상-클래스의-멤버)
+
    - [super() - 조상 클래스의 생성자](#-super---조상-클래스의-생성자)
+
 8. [package와 import](#8-package와-import)
+
    - [패키지(pakage)](#-패키지package)
+
    - [import문](#-import문)
+
    - [static import문](#-static-import문)
+
+9. [제어자(modifier)](#9-제어자modifier)
+
+   - [제어자란?](#-제어자란)
+
+   - [그 외 제어자 (static, final, abstract)](#-그-외-제어자-static-final-abstract)
+
+   - [접근 제어자(access modifier)](#-접근-제어자access-modifier)
+
+   - [제어자의 조합](#-제어자의-조합)
 
 # 1. 클래스와 인스턴스
 
@@ -846,6 +863,7 @@ import 패키지명.*;          // 전체
 
 - 특정 **클래스의 static 멤버를 사용할 때,** 클래스 정보를 컴파일러에게 제공한다.
 - static 멤버의 클래스명을 생략할 수 있다.
+
   ```java
   import static java.lang.Integer.*;    // Integer클래스의 모든 static 멤버
   import static java.lang.Math.random;  // Math 클래스의 random() 메서드만
@@ -854,3 +872,97 @@ import 패키지명.*;          // 전체
   // System.out.println(Math.random());
   out.println(random());   // System과 Math 클래스이름을 생략했다.
   ```
+
+# 9. 제어자(modifier)
+
+## 💡 제어자란?
+
+- 클래스/변수/메서드의 선언부에 함께 사용되어 부가적인 의미를 부여한다.
+- 종류
+  - **접근 제어자** : `public` `protected` `default` `private`
+  - 그 외 제어자 : `static` `final` `abstract` `native` `transient` `synchronized` `volatile` `strictfp`
+- 여러 제어자를 조합하여 사용할 수 있으나, 접근 제어자는 하나만 선택해야 한다.
+
+## 💡 그 외 제어자 (static, final, abstract)
+
+### `static` - 클래스의, 공통적인
+
+- 사용될 수 있는 곳 - 멤버변수, 메서드, 초기화 블럭
+  - static 멤버 변수 : 모든 인스턴스에 공통적으로 사용
+  - static 메서드 : 인스턴스 생성 없이 사용할 수 있으며, 인스턴스 멤버를 사용하지 않는다.
+
+### `final` - 마지막의, 변경될 수 없는
+
+- 사용될 수 있는 곳 - 클래스, 메서드, 멤버변수, 지역변수
+  - 변수(멤버변수/지역변수) : 값을 변경할 수 없는 상수가 됨
+    - 상수이므로, 일반적으로 선언과 초기화를 동시에 함
+      ```java
+      final int NUMBER = 10;
+      ```
+    - 인스턴스 변수의 경우, 인스턴스 생성 시 생성자에서 초기화 되도록 할 수 있다.
+      ```java
+      class Number {
+          final int NUM;    // 참조변수.NUM = 20; 과 같이 값 변경 X
+
+          Number(int num) {
+              NUM = num;    // 인스턴스 변수 초기화
+          }
+      }
+      ```
+  - 메서드 : 오버라이딩하여 변경할 수 없는 메서드
+  - 클래스 : 자신을 확장하는 자손 클래스를 정의할 수 없게 됨
+
+### `abstract` - 추상의, 미완성의
+
+- 사용될 수 있는 곳 - 클래스, 메서드
+  - 클래스 : 클래스 내에 추상 메서드가 선언되어 있음
+    - 인스턴스를 생성할 수 없다 (인스턴스를 생성해도 할 수 있는 것이 없음)
+  - 메서드 : 선언부만 작성한 상태 (추상 메서드임)
+
+## 💡 접근 제어자(access modifier)
+
+- 사용될 수 있는 곳 - 클래스, 멤버변수, 메서드, 생성자
+  - 클래스 : `public` `(default)`
+  - 메서드, 멤버변수 : `public` `protected` `(default)` `private`
+  - 지역변수 : 없음
+- 접근 범위
+
+|           | 같은 클래스 | 같은 패키지 | 자손 클래스 | 전체 |
+| --------- | ----------- | ----------- | ----------- | ---- |
+| public    | O           | O           | O           | O    |
+| protected | O           | O           | O           |      |
+| (default) | O           | O           |             |      |
+| private   | O           |             |             |      |
+
+### 접근 제어자를 이용한 캡슐화 ⇒ **[🔗 실습 예시](https://github.com/mirimy97/java.spring/blob/master/javajungsuk/ch07/Time.java)**
+
+- 외부로부터 데이터를 감추어 보호할 수 있다.
+- 외부에는 불필요한, 내부적으로만 사용되는 멤버들을 private으로 감출 수 있다.
+- (예시) 멤버 변수에 접근 제어자 `private` 또는 `protected`를 지정하고, setter 메서드를 통해서 멤버 변수의 값을 변경 할 수 있게 한다. → 멤버 변수을 `public` 으로 지정하면 조건에 맞는 값인지 검사할 수 없기 때문이다.
+
+### 생성자의 접근 제어자 ⇒ [🔗 실습 예시](https://github.com/mirimy97/java.spring/blob/master/javajungsuk/ch07/SingletonTest.java)
+
+- 생성자에 접근 제어자를 사용하여 인스턴스의 생성을 제한할 수 있다.
+- 대신 내부에서 인스턴스를 생성하고, `public` 메서드를 통해 인스턴스에 접근하게 함으로써 사용할 수 있는 **인스턴스의 개수를 제한**할 수 있다.
+
+## 💡 제어자의 조합
+
+### 정리
+
+| 대상     | 사용가능한 제어자                         |
+| -------- | ----------------------------------------- |
+| 클래스   | public, (defualt), final, abstract        |
+| 메서드   | 모든 접근 제어자, final, abstract, static |
+| 멤버변수 | 모든 접근 제어자, final, static           |
+| 지역변수 | final                                     |
+
+### 주의
+
+1. 메서드에 `static` 과 `abstract`를 함께 사용할 수 없음
+   - static 메서드는 몸통이 있는 메서드에만 사용할 수 있고, abstract는 구현부가 없다.
+2. 클래스에 `abstract`와 `final`을 동시에 사용할 수 없음
+   - final은 클래스를 확장(자손) 할 수 없고, abstract는 상속을 통해 완성되어야 한다.
+3. `abstract` 메서드의 접근 제어자가 `private` 일 수 없음
+   - private은 자손클래스에서 접근이 불가능하고, abstract는 상속을 통해 구현되어야 한다.
+4. 메서드에 `private`와 `final`을 같이 사용할 필요는 없음.
+   - 둘 다 오버라이딩X, 외부 접근X 이기 때문에 의미가 중복된다.
