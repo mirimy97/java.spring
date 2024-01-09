@@ -94,6 +94,10 @@
 
 - [참조변수의 형변환](#-참조변수의-형변환)
 
+- [instanceof 연산자](#-instanceof-연산자)
+
+- [참조변수와 인스턴스의 연결](#-참조변수와-인스턴스의-연결)
+
 # 1. 클래스와 인스턴스
 
 ## 💡객체 지향 언어
@@ -1000,10 +1004,7 @@ Tv t = new CaptionTv();    // (o)
 
 ## 💡 참조변수의 형변환
 
-<aside>
-✅ 참조변수의 형변환을 통해 참조하고 있는 인스턴스에서 사용할 수 있는 멤버의 범위를 조절한다.
-
-</aside>
+**✅ 참조변수의 형변환을 통해 참조하고 있는 인스턴스에서 사용할 수 있는 멤버의 범위를 조절한다.**
 
 - 종류
   - (Up-casting) 자손타입 → 조상타입 : 형변환 생략 가능
@@ -1046,3 +1047,67 @@ if (c instanceof Parent) {}    // true / false
   - 조상 → 자손 (`p instanceof Chlid`)
     - `true` 경우 : 참조변수의 개수가 `p` = `Child`
     - `false` 경우 : 참조변수의 개수가 `p` < `Child`
+
+### 사용법
+
+```java
+Parent parent = null;
+Child child = new Child();
+Child child2 = null;
+
+// parent = (Parent) child;
+parent = child;    // 자손 -> 조상 (형변환 생략 가능)
+child2 = (Child) parent;    // 조상 -> 자손 (형변환 생략 불가)
+```
+
+- 형변환 생략 가능 여부에 대한 이유
+  - (가능한 경우) `parent` 참조변수가 다룰 수 있는 멤버는 `child`가 참조하고 있는 인스턴스의 멤버와 같거나 적을 것이 분명하기 때문이다.
+  - (불가능한 경우) `parent` → `child`로 참조변수를 형변환했을 때, `parent`가 가지고 있는 인스턴스의 멤버보다 `child` 가 다루는 멤버가 더 많을 가능성이 있다.
+
+### 활용1 : 매개변수의 다형성
+
+하나의 조상을 상속받은 여러 자손 클래스들의 인스턴스를 한 번에 처리하는 메서드를 만드려고 할 때, 다형성을 이용할 수 있다. → [🔗 예제 실습 링크](https://github.com/mirimy97/java.spring/blob/babdedeff00e7ccfd537d29ab09d823fce3e4546/javajungsuk/ch07/PolyArgumentTest.java)
+
+### 활용2 : 객체 배열 다루기
+
+```java
+Parent p[] = new Parent[n];
+
+p[0] = new Child1();
+p[1] = new Child2();
+```
+
+공통의 조상 `Parent`를 가진 서로 다른 객체들을 배열로 묶어 사용할 수 있다.
+
+## 💡 instanceof 연산자
+
+참조변수와 인스턴스의 타입이 꼭 일치하지는 않는다.
+
+그래서 인스턴스의 실제 타입을 알아보기 위해, 주로 조건문에서 사용된다.
+
+### 사용법
+
+```java
+if (c instanceof Parent) {}    // true / false
+```
+
+- 값이 `true`로 반환된다면, **참조변수가 검사한 타입으로 형변환 될 수 있다**는 의미이다.
+- 경우의 수
+  - 같은 타입 (`c instanceof Child`)
+    - 모든 경우에서 `true`
+  - 자손 → 조상 (`c instanceof Parent`)
+    - 모든 경우에서 `true` : 참조변수의 개수가 `c` ≥ `Parent`
+  - 조상 → 자손 (`p instanceof Chlid`)
+    - `true` 경우 : 참조변수의 개수가 `p` = `Child`
+    - `false` 경우 : 참조변수의 개수가 `p` < `Child`
+
+## 💡 참조변수와 인스턴스의 연결
+
+조상 클래스와 자손 인스턴스에 **중복된 멤버변수를 선언**하여 자손 인스턴스를 사용하는 경우
+
+- 조상타입의 참조변수 `Parent p = new Child();` → 조상 클래스에 선언된 멤버변수 사용
+- 자손타입의 참조변수 `Child c = new Child();` → 자손 클래스에 선언된 멤버변수 사용
+
+단, 중복된 메서드(오버라이딩)의 경우는 참조변수 타입 관계없이 자손의 메서드를 사용한다.
+
+[🔗 예제 실습 링크](https://github.com/mirimy97/java.spring/blob/8468466339efc2077fafe0b0120026aeeda4794c/javajungsuk/ch07/BindingTest.java)
