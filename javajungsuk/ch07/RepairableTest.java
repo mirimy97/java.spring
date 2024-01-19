@@ -92,6 +92,10 @@ class SCV extends GroundUnit implements Repairable {
      */
     void repair(Repairable r) {
         if (r instanceof Unit) {
+            /**
+             * Repairable 인터페이스에는 멤버가 없어 실제로 참조변수인 r이 할 수 있는 일은 없으므로,
+             * instanceof 연산자로 타입을 체크한 뒤 Unit 으로 캐스팅하여 정의된 멤버변수 (hitPoint, MAX_HP)를 사용할 수 있게 했다
+             */
             Unit u = (Unit) r;
             while (u.hitPoint != u.MAX_HP) {
                 u.hitPoint++;
