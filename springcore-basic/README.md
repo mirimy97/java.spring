@@ -14,7 +14,7 @@
 
 ### 스프링 프레임워크
 
-![Untitled](/pic/1.png)
+![Untitled](https://github.com/mirimy97/java.spring/blob/master/springcore-basic/pic/1.png)
 
 - 핵심 기술: 스프링 DI 컨테이너, AOP, 이벤트, 기타
 - 웹 기술: 스프링 MVC, 스프링 WebFlux
