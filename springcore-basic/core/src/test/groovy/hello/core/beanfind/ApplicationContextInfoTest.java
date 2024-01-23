@@ -1,6 +1,6 @@
 package hello.core.beanfind;
 
-import hello.core.order.AppConfig;
+import hello.core.AppConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -23,7 +23,7 @@ public class ApplicationContextInfoTest {
              * name = org.springframework.context.annotation.internalCommonAnnotationProcessor / object = org.springframework.context.annotation.CommonAnnotationBeanPostProcessor@32c726ee
              * name = org.springframework.context.event.internalEventListenerProcessor / object = org.springframework.context.event.EventListenerMethodProcessor@22f31dec
              * name = org.springframework.context.event.internalEventListenerFactory / object = org.springframework.context.event.DefaultEventListenerFactory@34c01041
-             * name = appConfig / object = hello.core.order.AppConfig$$SpringCGLIB$$0@76f4b65
+             * name = appConfig / object = hello.core.AppConfig$$SpringCGLIB$$0@76f4b65
              * name = memberService / object = hello.core.member.MemberServiceImpl@c94fd30
              * name = memberRepository / object = hello.core.member.MemoryMemberRepository@36328d33
              * name = orderService / object = hello.core.order.OrderServiceImpl@2c4d1ac
@@ -47,7 +47,7 @@ public class ApplicationContextInfoTest {
                 Object bean = ac.getBean(beanDefinitionName);
                 System.out.println("name = " + beanDefinitionName + " / object = " + bean);
                 /**
-                 * name = appConfig / object = hello.core.order.AppConfig$$SpringCGLIB$$0@2c07545f
+                 * name = appConfig / object = hello.core.AppConfig$$SpringCGLIB$$0@2c07545f
                  * name = memberService / object = hello.core.member.MemberServiceImpl@e57b96d
                  * name = memberRepository / object = hello.core.member.MemoryMemberRepository@32c726ee
                  * name = orderService / object = hello.core.order.OrderServiceImpl@22f31dec
